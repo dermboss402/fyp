@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="MyAdvert.aspx.cs" Inherits="MyAdvert" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" Runat="Server">
-  <style type="text/css">
+    <style type="text/css">
         .auto-style1 {
             width: 100%;
         }
@@ -18,32 +18,58 @@
     
     <table class="auto-style1">
         <tr>
-            <td class="auto-style2">Upload Your profile Picture</td>
-            <td class="auto-style3">&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="auto-style2">Enter the Address you want to operate from</td>
             <td class="auto-style3">
-                <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                 <asp:Image ID="Image1" runat="server" Height="216px" />
             </td>
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td class="auto-style2">Phone</td>
-            <td class="auto-style3">
-                <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+            <td class="auto-style2">
+                <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
             </td>
+            <td class="auto-style3">
+                &nbsp;</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td class="auto-style2">Renumeration</td>
-            <td class="auto-style3">
-                <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+            <td class="auto-style2">
+                <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
             </td>
+            <td class="auto-style3">
+                &nbsp;</td>
             <td>&nbsp;</td>
         </tr>
-    </table>
+        <tr>
+            <td class="auto-style2">
+                <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
+            </td>
+            <td class="auto-style3">
+                &nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td class="auto-style2">
+                <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label>
+            </td>
+            <td class="auto-style3">
+                &nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td class="auto-style2">
+                <asp:Label ID="Label5" runat="server" Text="Label"></asp:Label>
+            </td>
+            <td class="auto-style3">
+                &nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td class="auto-style2">&nbsp;</td>
+            <td class="auto-style3">
+                &nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        </table>
     
 </asp:Content>
 

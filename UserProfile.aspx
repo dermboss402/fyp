@@ -11,10 +11,13 @@
         .auto-style3 {
             height: 21px;
         }
+        .auto-style4 {
+            height: 77px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="UserID" DataSourceID="SqlDataSource1" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
+    w;<asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="UserID" DataSourceID="SqlDataSource1" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
         <Columns>
             <asp:BoundField DataField="UserID" HeaderText="UserID" ReadOnly="True" SortExpression="UserID" />
             <asp:BoundField DataField="UserName" HeaderText="UserName" SortExpression="UserName" />
@@ -28,6 +31,8 @@
             <asp:BoundField DataField="County" HeaderText="County" SortExpression="County" />
             <asp:BoundField DataField="Phone" HeaderText="Phone" SortExpression="Phone" />
             <asp:BoundField DataField="Otheremail" HeaderText="Otheremail" SortExpression="Otheremail" />
+            <asp:BoundField DataField="About" HeaderText="About" SortExpression="About" />
+            <asp:BoundField DataField="Remuneration" HeaderText="Remuneration" SortExpression="Remuneration" />
         </Columns>
     </asp:GridView>
     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Users]"></asp:SqlDataSource>
@@ -125,6 +130,22 @@
             </td>
             <td>
                 <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="auto-style4">
+                Upload Profile Photo</td>
+            <td class="auto-style4">
+                <asp:Image ID="Image1" runat="server" Height="129px" Width="116px" />
+            </td>
+        </tr>
+        <tr>
+            <td class="auto-style4">
+                &nbsp;</td>
+            <td class="auto-style4">
+                
+            <asp:fileupload ID ="Fileupload1" runat="server"></asp:fileupload>
+                <asp:Button ID="Button2" runat="server" Height="33px" OnClick="Button2_Click" Text="Browse files" Width="118px" />
             </td>
         </tr>
         <tr>
