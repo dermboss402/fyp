@@ -15,7 +15,33 @@ public partial class Log_in_Screen : System.Web.UI.Page
 
     }
 
+
     protected void Button1_Click1(object sender, EventArgs e)
+    {
+        bool uNameValidate = validateUserInput(TextBox1.Text);
+        bool pswrdValidate = validateUserInput(TextBox2.Text);
+
+        if(uNameValidate && pswrdValidate)
+        {
+            accessUserDB();
+        }
+    }
+
+    public bool validateUserInput(String pword)
+    {
+        var positiveIntRegex = new System.Text.RegularExpressions.Regex(@"^[a-zA-Z0-9]'$");
+        if (!positiveIntRegex.IsMatch(pword))
+        {
+            return false;
+
+        }
+        else
+        {
+            return true;
+        }
+
+    }
+    protected void accessUserDB()
     {
         try
         {
@@ -23,26 +49,31 @@ public partial class Log_in_Screen : System.Web.UI.Page
             string checkuser = "Select [UserID] from [Users] where Username = '" + TextBox1.Text + "' and Password ='" + TextBox2.Text + "'";
             SqlCommand cmd = new SqlCommand(checkuser, conn);
 
+
             conn.Open();
-            var reader = cmd.ExecuteReader();
 
-            if (reader.Read())
             {
-                
-                Debug.WriteLine(reader.HasRows);
-                // Debug.WriteLine(reader.Read().ToString());
-                Session["UserID"] = reader.GetString(0);
-                Response.Redirect("Default.aspx");
-                reader.Close();
-                conn.Close();
-            }
-            else
-            {
-                Label1.Text = "You're username and password is incorrect";
-                Label1.ForeColor = System.Drawing.Color.Red;
+                var reader = cmd.ExecuteReader();
 
+                if (reader.Read())
+                {
+
+                    Debug.WriteLine(reader.HasRows);
+                    // Debug.WriteLine(reader.Read().ToString());
+                    Session["UserID"] = reader.GetString(0);
+                    Response.Redirect("Default.aspx");
+                    reader.Close();
+                    conn.Close();
+                }
+                else
+                {
+                    Label1.Text = "You're username and password is incorrect";
+                    Label1.ForeColor = System.Drawing.Color.Red;
+
+                }
             }
         }
+
         catch (Exception ex)
         {
             Debug.WriteLine("{0} Exception caught.", ex);

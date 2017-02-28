@@ -33,48 +33,84 @@ public partial class Search : System.Web.UI.Page
 
     public string GetMarkers()
     {
+       
+
         if (IsPostBack)
         {
             string markers = "";
-            ArrayList profile = new ArrayList();
-            ArrayList loc = new ArrayList();
-
-            string window = "";
+            string prevLat = "";
+            string prevLng = "";
+            string content = "";
+            string saveDir = @"Images\";
             int i = 0;
+            int j = 0;
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
             conn.Open();
 
-            string user = "Select * from [Users] where Level = '" + DropDownList1.Text + "' and Subject =  '" + DropDownList2.Text + "'";
+            string user = "Select * from [Users] where Level = '" + DropDownList1.Text + "' and Subject =  '" + DropDownList2.Text + "' ORDER BY Lat DESC, Lng DESC";
             SqlCommand commandD = new SqlCommand(user, conn);
             using (SqlDataReader dr = commandD.ExecuteReader())
             {
-                if(dr.HasRows)
-
+                
                 while (dr.Read())
                 {
                     i++;
-                        profile.Add(dr["UserName"].ToString().Trim());
-                        profile.Add(dr["Level"].ToString().Trim());
-                        profile.Add(dr["Subject"].ToString().Trim());
-                        profile.Add(dr["email"].ToString().Trim());
+                    Debug.WriteLine(dr["UserName"].ToString());
 
-                        markers +=
-                    @"var contentstring" + i.ToString() + " =  \"" 
-                    + dr["UserName"].ToString().Trim()+ "<br />"
+
+                    if (prevLat != dr["Lat"].ToString().Trim() && prevLng != dr["Lng"].ToString().Trim())
+                    {
+
+                        j++;
+
+                        if ((j - 1) > 0)
+                        {
+                            //markers += content;
+                            markers += @" var contentstring" + (j - 1).ToString() + "= \"" + content + "\"; var infowindow" + (j - 1).ToString() + " = new google.maps.InfoWindow({content: contentstring" + (j - 1).ToString() + "}); "
+                            +
+                            @"marker" + (j - 1).ToString() + ".addListener('click', function() {infowindow" + (j - 1).ToString() + ".open(map, marker" + (j - 1).ToString() + ");});";
+                            content = "";
+
+                        }
+                        //content+= saveDir + dr["UserPhoto"].ToString().Trim()+"<br />";
+
+                        content += dr["UserName"].ToString().Trim() + "<br />"
                     + dr["Level"].ToString().Trim() + "<br />"
-                    + dr["Subject"].ToString().Trim() + "<br />" 
-                    + dr["email"].ToString().Trim() + "\";" 
-                    + @" var marker" + i.ToString() 
-                    + @" = new google.maps.Marker({position: new google.maps.LatLng(" + dr["Lat"].ToString().Trim()
-                    + ", " 
-                    +  dr["Lng"].ToString().Trim() + "),"
-                    + @"map: map}); " 
-                    + @"var infowindow" + i.ToString() + " = new google.maps.InfoWindow({content: contentstring" + i.ToString()  + "}); " 
-                    +
-                    @"marker" + i.ToString() + ".addListener('click', function() {infowindow" + i.ToString() + ".open(map, marker" + i.ToString() + ");});" ;
+                    + dr["Subject"].ToString().Trim() + "<br />"
+                    + dr["email"].ToString().Trim() + "<br />";
 
-                        profile.Add(markers);
-                }
+                        markers += @" var marker" + j.ToString()
+                            + @" = new google.maps.Marker({position: new google.maps.LatLng(" + dr["Lat"].ToString().Trim()
+                            + ", "
+                            + dr["Lng"].ToString().Trim() + "),"
+                            + @"map: map}); ";
+
+
+
+
+                    }
+                    else
+                    {
+                        content +=
+                     "<br />"
+                    + dr["UserName"].ToString().Trim() + "<br />"
+                    + dr["Level"].ToString().Trim() + "<br />"
+                    + dr["Subject"].ToString().Trim() + "<br />"
+                    + dr["email"].ToString().Trim() + "<br />";
+                    
+                        
+
+                    }
+
+                    Debug.WriteLine(content);
+
+                    prevLat = dr["Lat"].ToString().Trim();
+                        prevLng = dr["Lng"].ToString().Trim();
+                    
+                    }
+                markers += @" var contentstring" + j.ToString() + "= \"" + content + "\"; var infowindow" + j.ToString() + " = new google.maps.InfoWindow({content: contentstring" + j.ToString() + "}); "
+                            +
+                            @"marker" + j.ToString() + ".addListener('click', function() {infowindow" + j.ToString() + ".open(map, marker" + j.ToString() + ");});";
 
                 Debug.WriteLine("Markers!!!: " + markers);
             }

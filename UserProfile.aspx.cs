@@ -15,6 +15,42 @@ public partial class UserProfile : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
 
+        SqlConnection connectionA = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+        string saveDir = @"Images\";
+        string appPath = Request.PhysicalApplicationPath;
+        string savePath;
+        {
+            string id = Session["UserId"].ToString();
+
+
+
+            connectionA.Open();
+            string user = "SELECT * FROM Users WHERE UserID ='" + id + "'";
+            SqlCommand commandD = new SqlCommand(user, connectionA);
+            using (SqlDataReader dr = commandD.ExecuteReader())
+            {
+                if (dr.HasRows)
+                {
+                   
+
+                    while (dr.Read())
+                    {
+
+                        Image2.ImageUrl = saveDir + dr["UserPhoto"].ToString().Trim();
+                        Label10.Text = dr["UserName"].ToString().Trim();
+                        Label11.Text = dr["email"].ToString().Trim();
+                        Label12.Text = dr["addressline1"].ToString().Trim();
+                        Label13.Text =  dr["addressline2"].ToString().Trim();
+                        Label17.Text = dr["city"].ToString().Trim();
+                        Label18.Text = dr["County"].ToString().Trim();
+                        Label14.Text = dr["Phone"].ToString().Trim();
+                        Label15.Text = dr["Level"].ToString().Trim();
+                        Label16.Text = dr["Subject"].ToString().Trim();
+                    }
+                }
+            }
+        }
+
     }
 
 
