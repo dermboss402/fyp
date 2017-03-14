@@ -49,7 +49,8 @@ public partial class Search : System.Web.UI.Page
 
             string user = "Select * from [Users] where Level = '" + DropDownList1.Text + "' and Subject =  '" + DropDownList2.Text + "' ORDER BY Lat DESC, Lng DESC";
             SqlCommand commandD = new SqlCommand(user, conn);
-            using (SqlDataReader dr = commandD.ExecuteReader())
+            SqlDataReader dr = null;
+            using (dr = commandD.ExecuteReader())
             {
                 
                 while (dr.Read())

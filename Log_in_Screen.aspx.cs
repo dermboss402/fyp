@@ -13,12 +13,16 @@ public partial class Log_in_Screen : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
 
+        String uName = TextBox1.Text;
+        String pword = TextBox2.Text;
+
+
     }
 
 
     protected void Button1_Click1(object sender, EventArgs e)
     {
-        bool uNameValidate = validateUserInput(TextBox1.Text);
+        bool uNameValidate = validateUser(TextBox1.Text);
         bool pswrdValidate = validateUserInput(TextBox2.Text);
 
         if(uNameValidate && pswrdValidate)
@@ -26,10 +30,24 @@ public partial class Log_in_Screen : System.Web.UI.Page
             accessUserDB();
         }
     }
+    public bool validateUser(String uName)
+    {
+        var positiveIntRegex = new System.Text.RegularExpressions.Regex(@"^[a-zA-Z0-9]+$");
+        if (!positiveIntRegex.IsMatch(uName))
+        {
+            return false;
+
+        }
+        else
+        {
+            return true;
+        }
+
+    }
 
     public bool validateUserInput(String pword)
     {
-        var positiveIntRegex = new System.Text.RegularExpressions.Regex(@"^[a-zA-Z0-9]'$");
+        var positiveIntRegex = new System.Text.RegularExpressions.Regex(@"^[a-zA-Z0-9]+$");
         if (!positiveIntRegex.IsMatch(pword))
         {
             return false;
